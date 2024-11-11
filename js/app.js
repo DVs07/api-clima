@@ -61,7 +61,9 @@ function consultarAPI(ciudad, pais) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${appId}`;
 
     // console.log(url);
-    
+    // Mostrar spinner de carga
+    mostrarSpinner();
+
     fetch(url)
         .then(respuesta => respuesta.json())
         .then(datos => {
@@ -78,14 +80,18 @@ function consultarAPI(ciudad, pais) {
 }
 
 function mostrarClima(datos){
-    const {main:{temp, temp_max, temp_min}} = datos;
+    const {name, main:{temp, temp_max, temp_min}} = datos;
 
     actual = convertirGrados(temp);
     max = convertirGrados(temp_max);
     min = convertirGrados(temp_min);
 
 
-    // Temperatura Actual
+    // Temperatura Actual y noimbre de la ciudad
+    const nombreCiudad = document.createElement('p');
+    nombreCiudad.textContent = `${name}`;
+    nombreCiudad.classList.add( 'text-2xl');
+
     const tempActual = document.createElement('p');
     tempActual.innerHTML = `${actual} &#8451`;
     tempActual.classList.add('font-bold', 'text-6xl');
@@ -93,15 +99,17 @@ function mostrarClima(datos){
     // Temperatura Maxima
     const tempMax = document.createElement('p');
     tempMax.innerHTML = `Max: ${max} &#8451`;
-    tempMax.classList.add('text-xl');
+    tempMax.classList.add('text-lg');
 
     // Temperatura Minima
     const tempMin = document.createElement('p');
     tempMin.innerHTML = `Min: ${min} &#8451`;
-    tempMin.classList.add('text-xl');
+    tempMin.classList.add('text-lg');
     
     const resultadoDiv = document.createElement('div');
-    resultadoDiv.classList.add('text-center', 'text-white');
+    resultadoDiv.classList.add('text-center', 'text-white', 'contenido');
+
+    resultadoDiv.appendChild(nombreCiudad);
     resultadoDiv.appendChild(tempActual);
 
     resultado.appendChild(resultadoDiv);
@@ -115,4 +123,25 @@ function limpiarHTML(){
     while(resultado.firstChild){
         resultado.removeChild(resultado.firstChild);
     }
+}
+
+function mostrarSpinner(){
+    limpiarHTML();
+
+    const spinner = document.createElement('div');
+    spinner.classList.add('sk-cube-grid');
+
+    spinner.innerHTML = `
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
+    `;
+
+    resultado.appendChild(spinner);
 }

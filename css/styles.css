@@ -1,6 +1,6 @@
 html {
   /* background: radial-gradient(circle, rgb(203, 204, 205) 0%, rgb(37, 122, 221) 100%); */
-  background-image: url('../img/bg.webp');
+  background-image: url('../img/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -69,4 +69,12 @@ html {
     -webkit-transform: scale3D(0, 0, 1);
             transform: scale3D(0, 0, 1);
   } 
+}
+
+@media screen and (max-width: 460px) {
+  html{
+    background-image: url('../img/bg-mobile.jpg');
+    background-size: cover;
+  }
+
 }
